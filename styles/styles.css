@@ -5,11 +5,16 @@
     font-family: 'Rubik', sans-serif;
 }
 body{
+    margin: 0px auto;
+    max-width: 1440px;
     background-color: lightgray;
     overflow: hidden;
+    height: 100vh;
+    min-height: 640px;
+    
 }
 header{
-    width: 100vw;
+    width: 100%;
     height: 225px;
     background-image: url(../images/pattern-bg.png);
     background-position: center;
@@ -75,4 +80,45 @@ button{
     margin-bottom: 10px;
     font-size: 10px;
     color: gray;
+}
+@media only screen and (min-width:576px){
+    .searchBar{
+        width: 50%;
+    }
+    .info_section{
+        width: 50%;
+    }
+
+}
+@media only screen and (min-width:768px){
+    .searchBar{
+        width: 30%;
+    }
+    .info_section{
+        width: 30%;
+    }
+}
+@media only screen and (min-width:992px){
+    .searchBar{
+        width: 40%;
+    }
+    .info_section{
+        height: 136px;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        width: 80%;
+        flex-direction: row;
+        justify-content: space-evenly;
+        
+    }
+    .info_section div{
+        width: 25%;
+        padding-right: 20px;
+        padding-left: 20px;
+        border-right: 1px solid lightgray;
+        text-align: center;
+    }
+    .isp {
+        border-right: none;
+    }
 }
