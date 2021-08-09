@@ -1,0 +1,19 @@
+{
+  "name": "ip-address-tracking-app",
+  "version": "1.0.0",
+  "description": "![Design preview for the IP address tracker coding challenge](./design/desktop-preview.jpg)",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BelayAdamu/Ip-Address-Tracker.git"
+  },
+  "author": "Belay Adamu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BelayAdamu/Ip-Address-Tracker/issues"
+  },
+  "homepage": "https://github.com/BelayAdamu/Ip-Address-Tracker#readme"
+}

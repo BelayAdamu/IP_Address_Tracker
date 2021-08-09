@@ -1,0 +1,78 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Rubik', sans-serif;
+}
+body{
+    background-color: lightgray;
+    overflow: hidden;
+}
+header{
+    width: 100vw;
+    height: 225px;
+    background-image: url(../images/pattern-bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow-y: visible;
+}
+.title{
+    padding: 25px 0px;
+}
+.title h1{
+    color: white;
+    font-size: 20px;
+}
+.searchBar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 20px;
+}
+input{
+    height: 45px;
+    width:85%;
+    border: 0px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    padding-left: 20px;
+    outline: none;
+    font-size: 18px;
+}
+button{
+    height: 45px;
+    width: 15%;
+    border: 0px;
+    background-color: black;
+    color: white;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    outline: none;
+}
+.info_section{
+    width: 80%;
+    background-color: white;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-between;
+    padding: 10px 0px;
+    border-radius: 10px;
+}
+.info_wrapper{
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.info_wrapper h2{
+    margin-bottom: 10px;
+    font-size: 10px;
+    color: gray;
+}
