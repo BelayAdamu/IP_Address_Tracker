@@ -4,7 +4,8 @@
   "description": "![Design preview for the IP address tracker coding challenge](./design/desktop-preview.jpg)",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "lite-server"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/BelayAdamu/Ip-Address-Tracker/issues"
   },
-  "homepage": "https://github.com/BelayAdamu/Ip-Address-Tracker#readme"
+  "homepage": "https://github.com/BelayAdamu/Ip-Address-Tracker#readme",
+  "dependencies": {
+    "lite-server": "^2.6.1",
+    "node-fetch": "^2.6.1"
+  }
 }
