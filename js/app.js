@@ -7,24 +7,34 @@ const goButton = document.querySelector('.search_button');
 const map = document.querySelector('#map');
 const vw = Math.max(document.documentElement.clientHeight)
 
-const API_KEY = 'at_oKAF2eyqv98B5ICXsGrm715MP7wVL';
-const url = 'https://geos.ipify.org/api/v1';
+const API_KEY = 'f62c08003cb646dcb698199c8a40cc6f';
+const url = 'https://ipgeolocation.abstractapi.com/v1/?api_key=f62c08003cb646dcb698199c8a40cc6f';
+const url2 = 'https://ipgeolocation.abstractapi.com/v1/?api_key='
 const urlForOwnip = 'https://api.db-ip.com/v2/free/self';
-const accurateIP = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-// const ipAddress = '197.156.86.115';
+const validIP = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+
+// https://ipgeolocation.abstractapi.com/v1/?api_key=f62c08003cb646dcb698199c8a40cc6f&ip_address=12.12.12.12
+
+
+var lattitude = 0;
+var longitude = 0;
 
 map.style.height = `${vw-225}px`
 
-console.log(url + '?' + 'apiKey=' + API_KEY + '&ipAddress=' + '197.156.86.115')
-fetch(urlForOwnip)
+console.log(url)
+
+fetch(url)
 .then(res => res.json())
 .then(res => {
-    fetchIPAndUpdateUI(res.ipAddress)
+    console.log(res);    
+            updateInfoSection(res);
+            mymap.panTo(new L.LatLng(res.latitude, res.longitude));
+            marker.setLatLng([res.latitude, res.longitude]).update();
 })
 .catch(err => {
     const Err = new Error(err);
     console.log(Err);
-})
+});
 
 goButton.addEventListener('click', ()=>{
     fetchIPAndUpdateUI(ipInput.value)
@@ -32,17 +42,23 @@ goButton.addEventListener('click', ()=>{
 
 const fetchIPAndUpdateUI = (ipAddress) =>{
     console.log(ipAddress);
-    if(accurateIP.test(ipAddress))
+    if(validIP.test(ipAddress))
     {
         ipInput.value = '';
         ipInput.placeholder = 'Loading...';
-        infoSectionLoading()
-        fetch(url + '?' + 'apiKey=' + API_KEY + '&ipAddress=' + ipAddress)
+        infoSectionLoading();
+        fetch(url2 + API_KEY + '&ip_address=' + ipAddress)
         .then(res => res.json())
         .then(res => {
-        updateInfoSection(res);
+            console.log(res);    
+            updateInfoSection(res);
+            mymap.panTo(new L.LatLng(res.latitude, res.longitude));
+            marker.setLatLng([res.latitude, res.longitude]).update();
         })
-        .catch(() => ipInput.placeholder = 'Failed to fetch...')
+        .catch((res) => {
+            err = new Error(res)
+            const message = err.message.split(':');
+            ipInput.placeholder = message[1]});
     } else{
         ipInput.value = '';
         ipInput.placeholder = 'Invalid ip address';
@@ -51,11 +67,13 @@ const fetchIPAndUpdateUI = (ipAddress) =>{
 }
 
 const updateInfoSection = (res) => {
-    locationinfo.innerHTML = res.location.city + ', ' + res.location.country;
-    ipAddressUI.innerHTML = res.ip;
-    timeZone.innerHTML ='GMT ' + res.location.timezone;
-    isp.innerHTML = res.isp
-    ipInput.placeholder = 'IP Address'
+    locationinfo.innerHTML = (res.city===null?' - ':res.city) + ', ' + res.country;
+    ipAddressUI.innerHTML = res.ip_address;
+    const fullTime = res.timezone.current_time.split(':');
+    const time = fullTime[0]+':'+fullTime[1]; 
+    timeZone.innerHTML =res.timezone.abbreviation + ' - ' + time;
+    isp.innerHTML = res.connection.isp_name;
+    ipInput.placeholder = 'Search for any IP address or domain';
 }
 const infoSectionLoading = () => {
     locationinfo.innerHTML = '-';
@@ -64,8 +82,38 @@ const infoSectionLoading = () => {
     isp.innerHTML = '-'
 }
 
+const showLocation = (res) => {
+}
+
+console.log('duket')
+var mymap = L.map('map').setView([lattitude, longitude], 13);
+var marker = L.marker([lattitude, longitude]).addTo(mymap);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    maxZoom: 18,
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1
+}).addTo(mymap);
+
 visualViewport.addEventListener('resize', function() {
     const vw = Math.max(document.documentElement.clientHeight)
-    map.style.height = `${vw-225}px`
-    console.log(vw)
+    map.style.height = `${vw-225}px`;
 });
+
+
+
+// var mymap = L.map('map').setView([51.505, -0.09], 13);
+// var marker = L.marker([51.5, -0.09]).addTo(mymap);
+
+// L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+//     maxZoom: 18,
+//     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+//         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+//     id: 'mapbox/streets-v11',
+//     tileSize: 512,
+//     zoomOffset: -1
+// }).addTo(mymap);
+
