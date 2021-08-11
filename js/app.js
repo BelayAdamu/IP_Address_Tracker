@@ -5,35 +5,28 @@ const isp = document.querySelector('.isp_value');
 const ipInput = document.querySelector('.ip_input');
 const goButton = document.querySelector('.search_button');
 const map = document.querySelector('#map');
-const vw = Math.max(document.documentElement.clientHeight)
+const vh = Math.max(document.documentElement.clientHeight)
 
 const API_KEY = 'f62c08003cb646dcb698199c8a40cc6f';
 const url = 'https://ipgeolocation.abstractapi.com/v1/?api_key=f62c08003cb646dcb698199c8a40cc6f';
 const url2 = 'https://ipgeolocation.abstractapi.com/v1/?api_key='
 const urlForOwnip = 'https://api.db-ip.com/v2/free/self';
-const validIP = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-
-// https://ipgeolocation.abstractapi.com/v1/?api_key=f62c08003cb646dcb698199c8a40cc6f&ip_address=12.12.12.12
-
+const validIP = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 
 var lattitude = 0;
 var longitude = 0;
 
-map.style.height = `${vw-225}px`
-
-console.log(url)
+map.style.height = `${vh-225}px`;
 
 fetch(url)
 .then(res => res.json())
 .then(res => {
-    console.log(res);    
             updateInfoSection(res);
             mymap.panTo(new L.LatLng(res.latitude, res.longitude));
             marker.setLatLng([res.latitude, res.longitude]).update();
 })
 .catch(err => {
     const Err = new Error(err);
-    console.log(Err);
 });
 
 goButton.addEventListener('click', ()=>{
@@ -41,7 +34,6 @@ goButton.addEventListener('click', ()=>{
 })
 
 const fetchIPAndUpdateUI = (ipAddress) =>{
-    console.log(ipAddress);
     if(validIP.test(ipAddress))
     {
         ipInput.value = '';
@@ -50,7 +42,6 @@ const fetchIPAndUpdateUI = (ipAddress) =>{
         fetch(url2 + API_KEY + '&ip_address=' + ipAddress)
         .then(res => res.json())
         .then(res => {
-            console.log(res);    
             updateInfoSection(res);
             mymap.panTo(new L.LatLng(res.latitude, res.longitude));
             marker.setLatLng([res.latitude, res.longitude]).update();
@@ -59,9 +50,12 @@ const fetchIPAndUpdateUI = (ipAddress) =>{
             err = new Error(res)
             const message = err.message.split(':');
             ipInput.placeholder = message[1]});
-    } else{
+    } else if(ipInput.value == ''){
+        ipInput.placeholder = 'Please enter an IP Address...';
+    }
+     else{
         ipInput.value = '';
-        ipInput.placeholder = 'Invalid ip address';
+        ipInput.placeholder = 'Invalid ip address...';
     }
     
 }
@@ -82,10 +76,6 @@ const infoSectionLoading = () => {
     isp.innerHTML = '-'
 }
 
-const showLocation = (res) => {
-}
-
-console.log('duket')
 var mymap = L.map('map').setView([lattitude, longitude], 13);
 var marker = L.marker([lattitude, longitude]).addTo(mymap);
 
@@ -99,12 +89,16 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 }).addTo(mymap);
 
 visualViewport.addEventListener('resize', function() {
-    const vw = Math.max(document.documentElement.clientHeight)
-    map.style.height = `${vw-225}px`;
+    const vh = Math.max(document.documentElement.clientHeight)
+    map.style.height = `${vh-225}px`;
 });
 
 
-
+document.addEventListener('keydown', (e) => {
+    if(e.keyCode == 13 || e.key == "Enter" || e.code == "Enter"){
+        goButton.click();
+    }
+})
 // var mymap = L.map('map').setView([51.505, -0.09], 13);
 // var marker = L.marker([51.5, -0.09]).addTo(mymap);
 
