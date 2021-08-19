@@ -51,11 +51,11 @@ Users should be able to:
 
 ### What I learned
 
-I learned a lot while building this app. I learned how to interact with remote API servers and how to present incoming responses to clients. I have used a different API for tracking IP's than what is recommended by Frontend mentors. The API I used for this project allows upto 10000 calls in a month as opposed to only 1000 calls on the recommended one. Of course, I'm not sutisfied by this change. The API i chose is less accurate when revealing locations.     
+I learned a lot while building this app. I learned how to interact with remote API servers and how to populate the UI with incoming responses from servers. I have used a different API for tracking IP's than what was recommended by Frontend mentors. The API I used allows upto 10000 calls a month as opposed to only 1000 calls on the recommended one. Of course, I'm not sutisfied by this change for the API i used is less accurate when revealing locations.     
 
 ### Continued development
 
-I hope to return to this app to make some search engine optimization so users can easily discover it.
+I hope to return to this app to make some search engine optimization to the code so users can easily discover it.
  
 ### Useful resources
 
@@ -74,7 +74,7 @@ I hope to return to this app to make some search engine optimization so users ca
 
 As always my deepest gratitudes go to:
 
-Fronend Mentor
-Coursera 
-W3schools 
+Fronend Mentor, 
+Coursera,  
+W3schools. 
 
